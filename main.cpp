@@ -18,6 +18,11 @@ public:
         while (true) {
             int n = chips.size();
 
+            // 若沒有晶片
+            if (n == 0) {
+                return -1;
+            }
+
             // 1. 若 chips 中只剩一顆晶片，直接回傳它的索引
             if (n == 1) {
                 return chips[0];
@@ -33,6 +38,7 @@ public:
             for (int i = 1; i < n; i++) {
                 int B = chips[i];
 
+                // 若 A 說 B 是好的，且 B 說 A 是好的，則 V++
                 if (report[A][B] == true && report[B][A] == true) {
                     V++;
                 }
@@ -45,11 +51,6 @@ public:
 
             // 6. 否則刪除 A，對剩下的晶片重複測試
             chips.erase(chips.begin());
-
-            // 如果都刪光了還找不到
-            if (chips.empty()) {
-                return -1;
-            }
         }
     }
 };
@@ -60,13 +61,13 @@ int main() {
     // 好晶片會誠實回答，壞晶片可任意回答
 
     vector<vector<bool>> report = {
-        // 0     1     2     3     4     5
-        {true,  true,  true,  false, true,  false},
-        {true,  true,  true,  false, true,  false},
-        {true,  true,  true,  false, true,  false},
-        {true,  false, true,  true,  false, true},
-        {true,  true,  true,  false, true,  false},
-        {false, true,  false, true,  true,  true}
+        // 0    1    2    3    4    5
+        {true, true, true, false, true, false},
+        {true, true, true, false, true, false},
+        {true, true, true, false, true, false},
+        {true, false, true, true, false, true},
+        {true, true, true, false, true, false},
+        {false, true, false, true, true, true}
     };
 
     ChipTester tester(report);
